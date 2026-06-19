@@ -1,179 +1,446 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AI Code Editor</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { 
-      font-family: -apple-system, sans-serif; 
-      display: flex; 
-      height: 100vh; 
-      background: #1e1e1e; 
-      color: #fff; 
-    }
-    .editor-panel, .preview-panel { 
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
-    }
-    .editor-panel { border-right: 2px solid #333; }
-    .header { 
-      background: #2d2d2d; 
-      padding: 10px; 
-      font-weight: bold; 
-      border-bottom: 1px solid #444; 
-    }
-    textarea { 
-      flex: 1; 
-      background: #1e1e1e; 
-      color: #f8f8f2; 
-      border: none; 
-      padding: 15px; 
-      font-family: 'Monaco', monospace; 
-      font-size: 14px; 
-      resize: none; 
-      outline: none; 
-    }
-    iframe { 
-      flex: 1; 
-      border: none; 
-      background: #fff; 
-    }
-    .ai-panel { 
-      position: fixed; 
-      bottom: 10px; 
-      right: 10px; 
-      width: 300px; 
-      background: #2d2d2d; 
-      border: 1px solid #444; 
-      border-radius: 8px; 
-      padding: 10px; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
-    }
-    .ai-panel h3 { margin-bottom: 8px; color: #4ec9b0; }
-    .ai-panel button { 
-      background: #4ec9b0; 
-      color: #000; 
-      border: none; 
-      padding: 8px 12px; 
-      border-radius: 4px; 
-      cursor: pointer; 
-      margin-top: 5px; 
-    }
-    .ai-response { 
-      margin-top: 8px; 
-      padding: 8px; 
-      background: #1e1e1e; 
-      border-radius: 4px; 
-      font-size: 12px; 
-      max-height: 150px; 
-      overflow-y: auto; 
-    }
-  </style>
+<meta charset="UTF-8">
+<title>🤖 AI Code Editor</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    display: flex; 
+    flex-direction: column;
+    height: 100vh; 
+    background: #1e1e1e; 
+    color: #fff; 
+    overflow: hidden;
+  }
+  
+  /* Top Toolbar */
+  .toolbar {
+    background: #2d2d2d;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #444;
+    flex-shrink: 0;
+  }
+  .toolbar .logo { font-weight: bold; font-size: 16px; color: #4ec9b0; }
+  .toolbar .status { font-size: 12px; color: #888; margin-left: auto; }
+  .toolbar .status.online { color: #4ec9b0; }
+  .toolbar .status.offline { color: #f48771; }
+  
+  /* Main Layout */
+  .main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+  
+  /* Editor Panel */
+  .editor-panel, .preview-panel { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column;
+    min-width: 0;
+  }
+  .editor-panel { border-right: 2px solid #333; }
+  
+  .panel-header { 
+    background: #252526; 
+    padding: 8px 15px; 
+    font-size: 12px;
+    font-weight: 600;
+    border-bottom: 1px solid #444;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  
+  /* Editor Textarea */
+  textarea { 
+    flex: 1; 
+    background: #1e1e1e; 
+    color: #d4d4d4; 
+    border: none; 
+    padding: 15px; 
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace; 
+    font-size: 14px; 
+    line-height: 1.6;
+    resize: none; 
+    outline: none;
+    tab-size: 2;
+  }
+  
+  /* Preview iframe */
+  iframe { 
+    flex: 1; 
+    border: none; 
+    background: #fff; 
+  }
+  
+  /* AI Panel */
+  .ai-panel { 
+    background: #252526;
+    border-top: 1px solid #444;
+    padding: 12px 15px;
+    flex-shrink: 0;
+  }
+  .ai-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .ai-header h3 { 
+    font-size: 13px; 
+    color: #4ec9b0; 
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ai-header select {
+    background: #3c3c3c;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    outline: none;
+  }
+  .ai-actions { display: flex; gap: 8px; }
+  .btn {
+    background: #0e639c;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #1177bb; }
+  .btn:disabled { background: #555; cursor: not-allowed; opacity: 0.6; }
+  .btn.secondary { background: #3c3c3c; }
+  .btn.secondary:hover { background: #505050; }
+  
+  .ai-response { 
+    margin-top: 10px; 
+    padding: 10px; 
+    background: #1e1e1e; 
+    border: 1px solid #333;
+    border-radius: 4px; 
+    font-size: 13px;
+    line-height: 1.5;
+    max-height: 200px; 
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: -apple-system, sans-serif;
+  }
+  .ai-response::-webkit-scrollbar { width: 8px; }
+  .ai-response::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+  .ai-response code {
+    background: #2d2d2d;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'Consolas', monospace;
+    font-size: 12px;
+    color: #ce9178;
+  }
+  
+  /* Status indicator */
+  .spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #555;
+    border-top-color: #4ec9b0;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  
+  /* Resizer */
+  .resizer {
+    width: 4px;
+    background: #444;
+    cursor: col-resize;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .resizer:hover { background: #4ec9b0; }
+</style>
 </head>
 <body>
+
+<div class="toolbar">
+  <span class="logo">🤖 AI Code Editor</span>
+  <button class="btn secondary" onclick="runCode()">▶ Run</button>
+  <button class="btn secondary" onclick="formatCode()">✨ Format</button>
+  <button class="btn secondary" onclick="clearCode()">🗑️ Clear</button>
+  <span class="status" id="status">⚪ Checking Ollama...</span>
+</div>
+
+<div class="main">
   <div class="editor-panel">
-    <div class="header">📝 Code Editor (HTML/CSS/JS)</div>
-    <textarea id="code" spellcheck="false">
-<!DOCTYPE html>
+    <div class="panel-header">
+      <span>📝 CODE (HTML / CSS / JS)</span>
+    </div>
+    <textarea id="code" spellcheck="false" placeholder="Write your code here..."><!DOCTYPE html>
 <html>
 <head>
   <style>
-    body { 
-      font-family: Arial; 
-      text-align: center; 
-      padding: 50px; 
-      background: linear-gradient(135deg, #667eea, #764ba2);
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
+      margin: 0;
     }
-    h1 { font-size: 3em; }
+    h1 { font-size: 3em; margin-bottom: 20px; }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background: white;
+      color: #667eea;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
-  <h1>Hello! 👋</h1>
-  <p>Edit me and watch the preview update live!</p>
+  <h1>🎉 Hello, World!</h1>
+  <p>Edit the code on the left and watch this preview update live!</p>
+  <button onclick="alert('It works! 🚀')">Click Me</button>
+  
+  <script>
+    console.log('Your JS runs here too!');
+  </script>
 </body>
-</html>
-    </textarea>
+</html></textarea>
   </div>
+
+  <div class="resizer" id="resizer"></div>
 
   <div class="preview-panel">
-    <div class="header">👁️ Live Preview</div>
+    <div class="panel-header">
+      <span>👁️ LIVE PREVIEW</span>
+    </div>
     <iframe id="preview"></iframe>
   </div>
+</div>
 
-  <div class="ai-panel">
+<div class="ai-panel">
+  <div class="ai-header">
     <h3>🤖 AI Assistant</h3>
-    <button onclick="askAI()">🔍 Analyze My Code</button>
-    <div id="aiResponse" class="ai-response">AI insights will appear here...</div>
+    <select id="modelSelect"><option>Loading models...</option></select>
+    <div class="ai-actions">
+      <button class="btn" onclick="askAI()">🔍 Analyze Code</button>
+      <button class="btn secondary" onclick="autoFix()">🛠️ Auto-Fix</button>
+      <button class="btn secondary" onclick="explainCode()">💡 Explain</button>
+    </div>
   </div>
+  <div class="ai-response" id="aiResponse">👋 Welcome! Click "Analyze Code" to let AI review your work. Make sure Ollama is running (<code>OLLAMA_ORIGINS="*" ollama serve</code>).</div>
+</div>
 
-  <script>
-    const code = document.getElementById('code');
-    const preview = document.getElementById('preview');
+<script>
+  // ===== Elements =====
+  const code = document.getElementById('code');
+  const preview = document.getElementById('preview');
+  const status = document.getElementById('status');
+  const modelSelect = document.getElementById('modelSelect');
+  const aiResponse = document.getElementById('aiResponse');
 
-    // Live preview update
-    code.addEventListener('input', () => {
-      const doc = preview.contentDocument || preview.contentWindow.document;
-      doc.open();
-      doc.write(code.value);
-      doc.close();
-    });
-
-    // Trigger initial preview
-    code.dispatchEvent(new Event('input'));
-
-    // AI Assistant - connects to Ollama
-    async function askAI() {
-  const responseDiv = document.getElementById('aiResponse');
-  responseDiv.innerHTML = '⏳ Analyzing...';
-  
-  try {
-    // First check if Ollama is running
-    const testRes = await fetch('http://localhost:11434/api/tags');
-    
-    if (!testRes.ok) {
-      responseDiv.innerHTML = '❌ Ollama is not running! Open terminal and run: <code>ollama serve</code>';
-      return;
-    }
-    
-    const tagsData = await testRes.json();
-    const models = tagsData.models || [];
-    
-    if (models.length === 0) {
-      responseDiv.innerHTML = '❌ No models installed! Run: <code>ollama pull llama3</code>';
-      return;
-    }
-    
-    // Use the first available model
-    const modelName = models[0].name;
-    
-    const res = await fetch('http://localhost:11434/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: modelName,
-        prompt: `Analyze this code for errors, fix them, and explain your changes:\n\n${code.value}`,
-        stream: false
-      })
-    });
-    
-    if (!res.ok) {
-      const errData = await res.json();
-      responseDiv.innerHTML = `❌ API Error: ${errData.error || 'Unknown error'}`;
-      return;
-    }
-    
-    const data = await res.json();
-    responseDiv.innerHTML = `<strong>Model used:</strong> ${modelName}<br><br>${data.response}`;
-  } catch (err) {
-    responseDiv.innerHTML = `❌ Connection Error: ${err.message}<br><br>
-      <strong>Try these fixes:</strong><br>
-      1. Run <code>ollama serve</code> in terminal<br>
-      2. Run with CORS: <code>OLLAMA_ORIGINS="*" ollama serve</code><br>
-      3. Check if a model is installed: <code>ollama list</code>`;
+  // ===== Live Preview =====
+  function updatePreview() {
+    const doc = preview.contentDocument || preview.contentWindow.document;
+    doc.open();
+    doc.write(code.value);
+    doc.close();
   }
-}
-  </script>
+  code.addEventListener('input', updatePreview);
+
+  // ===== Run Code =====
+  function runCode() {
+    updatePreview();
+    aiResponse.innerHTML = '✅ Code reloaded in preview!';
+  }
+
+  // ===== Format Code (basic) =====
+  function formatCode() {
+    // Simple indentation cleanup
+    let formatted = code.value
+      .replace(/\t/g, '  ')
+      .replace(/;\n(?!\s*[}\]])/g, ';\n\n')
+      .replace(/{\n(?!\s)/g, '{\n  ');
+    code.value = formatted;
+    updatePreview();
+    aiResponse.innerHTML = '✨ Code formatted (basic cleanup)';
+  }
+
+  // ===== Clear Code =====
+  function clearCode() {
+    if (confirm('Clear all code?')) {
+      code.value = '';
+      updatePreview();
+      aiResponse.innerHTML = '🗑️ Editor cleared';
+    }
+  }
+
+  // ===== Ollama Status Check =====
+  async function checkOllama() {
+    try {
+      const res = await fetch('http://localhost:11434/api/tags');
+      if (res.ok) {
+        const data = await res.json();
+        const models = data.models || [];
+        status.className = 'status online';
+        status.innerHTML = `🟢 Ollama connected • ${models.length} model${models.length !== 1 ? 's' : ''}`;
+        
+        // Populate model selector
+        if (models.length > 0) {
+          modelSelect.innerHTML = '';
+          models.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m.name;
+            opt.textContent = m.name;
+            modelSelect.appendChild(opt);
+          });
+        } else {
+          modelSelect.innerHTML = '<option>No models installed</option>';
+        }
+      } else {
+        throw new Error('Not OK');
+      }
+    } catch (err) {
+      status.className = 'status offline';
+      status.innerHTML = '🔴 Ollama offline — run: <code>ollama serve</code>';
+      modelSelect.innerHTML = '<option>Ollama not running</option>';
+    }
+  }
+
+  // ===== AI: Analyze Code =====
+  async function askAI() {
+    if (!modelSelect.value || modelSelect.value.includes('not running')) {
+      aiResponse.innerHTML = '❌ Ollama is not running! Open terminal and run: <code>OLLAMA_ORIGINS="*" ollama serve</code>';
+      return;
+    }
+    aiResponse.innerHTML = '<span class="spinner"></span> Analyzing your code...';
+    const response = await callOllama(
+      `You are a helpful code reviewer. Analyze this HTML/CSS/JS code for:\n` +
+      `1. Bugs or errors\n2. Best practices\n3. Performance issues\n\n` +
+      `Be concise and friendly. Use code examples when helpful.\n\nCODE:\n${code.value}`
+    );
+    aiResponse.innerHTML = response;
+  }
+
+  // ===== AI: Auto-Fix =====
+  async function autoFix() {
+    if (!confirm('AI will rewrite your code with fixes applied. Continue?')) return;
+    aiResponse.innerHTML = '<span class="spinner"></span> Fixing your code...';
+    const response = await callOllama(
+      `You are a code fixer. Review this HTML/CSS/JS code, fix ALL errors, and return ONLY the corrected code wrapped in a single \`\`\`html block. ` +
+      `Add a brief explanation after the code.\n\nCODE TO FIX:\n${code.value}`
+    );
+    // Extract code block
+    const codeMatch = response.match(/```(?:html)?\n?([\s\S]*?)```/);
+    if (codeMatch) {
+      code.value = codeMatch[1].trim();
+      updatePreview();
+      const explanation = response.replace(/```[\s\S]*?```/, '').trim();
+      aiResponse.innerHTML = `✅ <strong>Fixed and applied!</strong>\n\n${explanation || 'Code has been updated.'}`;
+    } else {
+      aiResponse.innerHTML = `⚠️ AI response didn't contain a code block:\n\n${response}`;
+    }
+  }
+
+  // ===== AI: Explain Code =====
+  async function explainCode() {
+    aiResponse.innerHTML = '<span class="spinner"></span> Explaining your code...';
+    const response = await callOllama(
+      `Explain this HTML/CSS/JS code in simple terms. What does it do? How does it work? ` +
+      `Keep it beginner-friendly and use bullet points.\n\nCODE:\n${code.value}`
+    );
+    aiResponse.innerHTML = response;
+  }
+
+  // ===== Ollama API Call =====
+  async function callOllama(prompt) {
+    try {
+      const res = await fetch('http://localhost:11434/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: modelSelect.value,
+          prompt: prompt,
+          stream: false
+        })
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        return `❌ API Error: ${err.error || 'Unknown error'}`;
+      }
+      const data = await res.json();
+      return data.response || '⚠️ No response from AI';
+    } catch (err) {
+      return `❌ Connection Error: ${err.message}\n\nMake sure Ollama is running with: <code>OLLAMA_ORIGINS="*" ollama serve</code>`;
+    }
+  }
+
+  // ===== Resizer for panels =====
+  const resizer = document.getElementById('resizer');
+  const editorPanel = document.querySelector('.editor-panel');
+  const previewPanel = document.querySelector('.preview-panel');
+  let isResizing = false;
+  
+  resizer.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  });
+  
+  document.addEventListener('mousemove', (e) => {
+    if (!isResizing) return;
+    const main = document.querySelector('.main');
+    const rect = main.getBoundingClientRect();
+    const percentage = ((e.clientX - rect.left) / rect.width) * 100;
+    if (percentage > 20 && percentage < 80) {
+      editorPanel.style.flex = `0 0 ${percentage}%`;
+      previewPanel.style.flex = `0 0 ${100 - percentage}%`;
+    }
+  });
+  
+  document.addEventListener('mouseup', () => {
+    isResizing = false;
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  });
+
+  // ===== Tab key support in textarea =====
+  code.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const start = code.selectionStart;
+      const end = code.selectionEnd;
+      code.value = code.value.substring(0, start) + '  ' + code.value.substring(end);
+      code.selectionStart = code.selectionEnd = start + 2;
+      updatePreview();
+    }
+  });
+
+  // ===== Initialize =====
+  updatePreview();
+  checkOllama();
+  // Recheck status every 5 seconds
+  setInterval(checkOllama, 5000);
+</script>
+
 </body>
 </html>
