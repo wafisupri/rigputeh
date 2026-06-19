@@ -125,26 +125,55 @@
 
     // AI Assistant - connects to Ollama
     async function askAI() {
-      const responseDiv = document.getElementById('aiResponse');
-      responseDiv.innerHTML = '⏳ Analyzing...';
-      
-      try {
-        const res = await fetch('http://localhost:11434/api/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'minimax-m3',  // or whatever your model is called
-            prompt: `Analyze this code for errors and suggest fixes. Explain what you change:\n\n${code.value}`,
-            stream: false
-          })
-        });
-        
-        const data = await res.json();
-        responseDiv.innerHTML = data.response;
-      } catch (err) {
-        responseDiv.innerHTML = '❌ Error: Make sure Ollama is running!';
-      }
+  const responseDiv = document.getElementById('aiResponse');
+  responseDiv.innerHTML = '⏳ Analyzing...';
+  
+  try {
+    // First check if Ollama is running
+    const testRes = await fetch('http://localhost:11434/api/tags');
+    
+    if (!testRes.ok) {
+      responseDiv.innerHTML = '❌ Ollama is not running! Open terminal and run: <code>ollama serve</code>';
+      return;
     }
+    
+    const tagsData = await testRes.json();
+    const models = tagsData.models || [];
+    
+    if (models.length === 0) {
+      responseDiv.innerHTML = '❌ No models installed! Run: <code>ollama pull llama3</code>';
+      return;
+    }
+    
+    // Use the first available model
+    const modelName = models[0].name;
+    
+    const res = await fetch('http://localhost:11434/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: modelName,
+        prompt: `Analyze this code for errors, fix them, and explain your changes:\n\n${code.value}`,
+        stream: false
+      })
+    });
+    
+    if (!res.ok) {
+      const errData = await res.json();
+      responseDiv.innerHTML = `❌ API Error: ${errData.error || 'Unknown error'}`;
+      return;
+    }
+    
+    const data = await res.json();
+    responseDiv.innerHTML = `<strong>Model used:</strong> ${modelName}<br><br>${data.response}`;
+  } catch (err) {
+    responseDiv.innerHTML = `❌ Connection Error: ${err.message}<br><br>
+      <strong>Try these fixes:</strong><br>
+      1. Run <code>ollama serve</code> in terminal<br>
+      2. Run with CORS: <code>OLLAMA_ORIGINS="*" ollama serve</code><br>
+      3. Check if a model is installed: <code>ollama list</code>`;
+  }
+}
   </script>
 </body>
 </html>
