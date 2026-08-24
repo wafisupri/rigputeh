@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 // New slideshow images, naturally 1672x941
 const SLIDE_IMAGES = [
-  '/slideshow/battlestation-1.png',
-  '/slideshow/battlestation-2.png',
-  '/slideshow/battlestation-3.png',
+  `${import.meta.env.BASE_URL}slideshow/battlestation-1.png`,
+  `${import.meta.env.BASE_URL}slideshow/battlestation-2.png`,
+  `${import.meta.env.BASE_URL}slideshow/battlestation-3.png`,
 ]
 
 export function JourneyDesktop() {

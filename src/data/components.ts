@@ -40,7 +40,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'Case',
     model: 'Segotep Endura Pro+ 240S White',
     brand: 'Segotep',
-    image: '/specs/case-segotep-endura-pro-240s-white.png',
+    image: import.meta.env.BASE_URL + "specs/case-segotep-endura-pro-240s-white.png",
     keySpecs: [
       'Pillar-less panoramic dual-chamber design',
       'Tempered glass front & side panels',
@@ -65,7 +65,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'Graphics Card',
     model: 'XFX Swift AMD Radeon RX 9060 XT 16GB',
     brand: 'XFX',
-    image: '/specs/gpu-xfx-swift-rx9060xt-16gb.png',
+    image: import.meta.env.BASE_URL + "specs/gpu-xfx-swift-rx9060xt-16gb.png",
     keySpecs: [
       '16 GB GDDR6 VRAM',
       'Triple-fan white shroud',
@@ -90,7 +90,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'CPU Cooler',
     model: 'ID-COOLING FX360 LCD White',
     brand: 'ID-COOLING',
-    image: '/specs/cpu-cooler-id-cooling-fx360-lcd-white.png',
+    image: import.meta.env.BASE_URL + "specs/cpu-cooler-id-cooling-fx360-lcd-white.png",
     keySpecs: [
       '360mm Radiator',
       '1.48" LCD screen on pump head',
@@ -115,7 +115,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'Processor',
     model: 'AMD Ryzen 7 7800X3D',
     brand: 'AMD',
-    image: '/specs/cpu-ryzen-7800x3d.png',
+    image: import.meta.env.BASE_URL + "specs/cpu-ryzen-7800x3d.png",
     keySpecs: [
       '8 Cores / 16 Threads',
       '3D V-Cache (96MB total)',
@@ -139,7 +139,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'Motherboard',
     model: 'MSI B650 PRO-S',
     brand: 'MSI',
-    image: '/specs/mobo-msi-b650-pro-s.png',
+    image: import.meta.env.BASE_URL + "specs/mobo-msi-b650-pro-s.png",
     keySpecs: [
       'AM5 Socket (Ryzen 7000/8000)',
       'B650 Chipset',
@@ -163,7 +163,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'Memory',
     model: 'XPG Lancer Blade 32GB (16x2) 6000MHz White',
     brand: 'XPG',
-    image: '/specs/ram-xpg-lancer-blade-16x2-6000mhz.png',
+    image: import.meta.env.BASE_URL + "specs/ram-xpg-lancer-blade-16x2-6000mhz.png",
     keySpecs: [
       '32 GB Total (2x16GB)',
       'DDR5-6000 CL30',
@@ -187,7 +187,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'Storage',
     model: '1TB Samsung 990 Pro',
     brand: 'Samsung',
-    image: '/specs/ssd-1tb-samsung-990-pro.png',
+    image: import.meta.env.BASE_URL + "specs/ssd-1tb-samsung-990-pro.png",
     keySpecs: [
       '1 TB Capacity',
       'PCIe 4.0 x4 NVMe',
@@ -211,7 +211,7 @@ export const COMPONENTS: Record<string, ComponentSpec> = {
     name: 'Power Supply',
     model: 'Cooler Master MWE Gold 850 V3 White',
     brand: 'Cooler Master',
-    image: '/specs/psu-coolermaster-850-mwe-gold-v3.png',
+    image: import.meta.env.BASE_URL + "specs/psu-coolermaster-850-mwe-gold-v3.png",
     keySpecs: [
       '850W 80+ Gold',
       'Fully Modular White cables',
@@ -300,11 +300,11 @@ export const BATTLESTATION = {
   main: {
     name: 'MSI MAG 274QRFW X32',
     spec: '27" QHD 320Hz Rapid IPS — White',
-    image: '/specs/monitor-main-msi-274qrfw-x32.png'
+    image: import.meta.env.BASE_URL + "specs/monitor-main-msi-274qrfw-x32.png"
   },
   secondary: {
     name: 'MSI PRO MP275W E2',
     spec: '27" FHD 120Hz IPS — White',
-    image: '/specs/monitor-secondary-msi-pro-mp275w-e2.png'
+    image: import.meta.env.BASE_URL + "specs/monitor-secondary-msi-pro-mp275w-e2.png"
   }
 };

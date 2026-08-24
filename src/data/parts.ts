@@ -55,7 +55,7 @@ export const CORE: Part[] = [
       ['Boost', 'Up to 5.0 GHz'],
       ['TDP', '120 W']
     ],
-    img: '/parts/cpu-ryzen-7800x3d--3.webp',
+    img: import.meta.env.BASE_URL + "parts/cpu-ryzen-7800x3d--3.webp",
     alt: 'AMD Ryzen 7 7800X3D processor IHS',
     chart: {
       title: '1440p gaming average',
@@ -82,7 +82,7 @@ export const CORE: Part[] = [
       ['Arch', 'RDNA 4'],
       ['Bus', 'PCIe 5.0 ×16']
     ],
-    img: '/parts/gpu-xfx-swift-rx9060xt-16gb--1.webp',
+    img: import.meta.env.BASE_URL + "parts/gpu-xfx-swift-rx9060xt-16gb--1.webp",
     alt: 'XFX Swift Radeon RX 9060 XT 16GB graphics card, triple-fan front',
     chart: {
       title: '1440p ultra average',
@@ -110,7 +110,7 @@ export const CORE: Part[] = [
       ['Bandwidth', '322 GB/s'],
       ['Headroom', '1440p+ textures']
     ],
-    img: '/parts/gpu-xfx-swift-rx9060xt-16gb--0.webp',
+    img: import.meta.env.BASE_URL + "parts/gpu-xfx-swift-rx9060xt-16gb--0.webp",
     alt: 'XFX Swift RX 9060 XT backplate covering 16 GB GDDR6 modules',
     chart: {
       title: 'Frame buffer capacity',
@@ -138,7 +138,7 @@ export const CORE: Part[] = [
       ['Timing', 'CL30 EXPO'],
       ['Profile', 'Low-profile']
     ],
-    img: '/parts/ram-xpg-lancer-blade-16x2-6000mhz--1.webp',
+    img: import.meta.env.BASE_URL + "parts/ram-xpg-lancer-blade-16x2-6000mhz--1.webp",
     alt: 'XPG Lancer Blade DDR5 memory module',
     chart: {
       title: 'AIDA64 read bandwidth',
@@ -165,7 +165,7 @@ export const CORE: Part[] = [
       ['Read / Write', '7,450 / 6,900 MB/s'],
       ['Endurance', '600 TBW']
     ],
-    img: '/parts/ssd-1tb-samsung-990-pro--0.webp',
+    img: import.meta.env.BASE_URL + "parts/ssd-1tb-samsung-990-pro--0.webp",
     alt: 'Samsung 990 PRO 1TB NVMe SSD',
     chart: {
       title: 'Sequential read',
@@ -193,7 +193,7 @@ export const CORE: Part[] = [
       ['Refresh', '320 Hz OC'],
       ['Extras', 'HDR400 · ΔE < 2']
     ],
-    img: '/parts/monitor-main-msi-274qrfw-x32-27-qhd-320hz-rapid-ips-white--0.webp',
+    img: import.meta.env.BASE_URL + "parts/monitor-main-msi-274qrfw-x32-27-qhd-320hz-rapid-ips-white--0.webp",
     alt: 'MSI MAG 274QRFW X32 27 inch QHD 320Hz white monitor',
     chart: {
       title: 'Refresh rate',
@@ -223,7 +223,7 @@ export const SUPPORTING: Part[] = [
       ['Cooling', 'Up to 360 mm rad'],
       ['Theme', 'All-white steel']
     ],
-    img: '/parts/case-segotep-endura-pro-240s-white--0.webp',
+    img: import.meta.env.BASE_URL + "parts/case-segotep-endura-pro-240s-white--0.webp",
     alt: 'Segotep Endura Pro+ 240S white dual-chamber case',
     chart: {
       title: 'Load airflow Δ temp',
@@ -250,7 +250,7 @@ export const SUPPORTING: Part[] = [
       ['Fans', '3 × ARGB PWM'],
       ['Noise', '< 32 dBA typ.']
     ],
-    img: '/parts/cpu-cooler-id-cooling-fx360-lcd-white--2.webp',
+    img: import.meta.env.BASE_URL + "parts/cpu-cooler-id-cooling-fx360-lcd-white--2.webp",
     alt: 'ID-COOLING FX360 LCD White 360mm AIO cooler',
     chart: {
       title: 'Cinebench load temp',
@@ -277,7 +277,7 @@ export const SUPPORTING: Part[] = [
       ['Memory', 'DDR5-7600+ OC'],
       ['Storage', 'PCIe 4.0 M.2 ×2']
     ],
-    img: '/parts/mobo-msi-b650-pro-s--0.webp',
+    img: import.meta.env.BASE_URL + "parts/mobo-msi-b650-pro-s--0.webp",
     alt: 'MSI B650 PRO-S AM5 motherboard',
     chart: {
       title: 'Max memory OC',
@@ -301,7 +301,7 @@ export const SUPPORTING: Part[] = [
       ['Cables', 'Fully modular'],
       ['Fan', '120 mm HDB']
     ],
-    img: '/parts/psu-coolermaster-850-mwe-gold-v3--3.webp',
+    img: import.meta.env.BASE_URL + "parts/psu-coolermaster-850-mwe-gold-v3--3.webp",
     alt: 'Cooler Master MWE Gold 850 V3 power supply',
     chart: {
       title: 'Efficiency at 50% load',
@@ -327,7 +327,7 @@ export const SUPPORTING: Part[] = [
       ['Refresh', '120 Hz'],
       ['Use', 'Chat / charts']
     ],
-    img: '/parts/monitor-secondary-msi-pro-mp275w-e2-27-fhd-120hz-ips-white--1.webp',
+    img: import.meta.env.BASE_URL + "parts/monitor-secondary-msi-pro-mp275w-e2-27-fhd-120hz-ips-white--1.webp",
     alt: 'MSI PRO MP275W E2 27 inch FHD 120Hz white monitor',
     chart: {
       title: 'Refresh rate',

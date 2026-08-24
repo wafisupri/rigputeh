@@ -49,16 +49,16 @@ export function ExplodingHero() {
         {/* The Card Container */}
         <div className="relative w-[280px] h-[280px]">
           {/* Exploding Parts (Background layer) */}
-          <Card style={cpu} src="/tedy/cpu.png" alt="CPU" />
-          <Card style={cooler} src="/tedy/cooler.png" alt="Cooler" />
-          <Card style={motherboard} src="/tedy/motherboard.png" alt="Motherboard" />
-          <Card style={gpu} src="/tedy/gpu.png" alt="GPU" />
-          <Card style={ram} src="/tedy/ram.png" alt="RAM" />
-          <Card style={ssd} src="/tedy/ssd.png" alt="SSD" />
-          <Card style={psu} src="/tedy/psu.png" alt="PSU" />
-          <Card style={pcCase} src="/tedy/case.png" alt="Case" />
-          <Card style={monitorMain} src="/tedy/monitor-main.png" alt="Main Monitor" />
-          <Card style={monitorSecondary} src="/tedy/monitor-secondary.png" alt="Secondary Monitor" />
+          <Card style={cpu} src={`${import.meta.env.BASE_URL}tedy/cpu.png`} alt="CPU" />
+          <Card style={cooler} src={`${import.meta.env.BASE_URL}tedy/cooler.png`} alt="Cooler" />
+          <Card style={motherboard} src={`${import.meta.env.BASE_URL}tedy/motherboard.png`} alt="Motherboard" />
+          <Card style={gpu} src={`${import.meta.env.BASE_URL}tedy/gpu.png`} alt="GPU" />
+          <Card style={ram} src={`${import.meta.env.BASE_URL}tedy/ram.png`} alt="RAM" />
+          <Card style={ssd} src={`${import.meta.env.BASE_URL}tedy/ssd.png`} alt="SSD" />
+          <Card style={psu} src={`${import.meta.env.BASE_URL}tedy/psu.png`} alt="PSU" />
+          <Card style={pcCase} src={`${import.meta.env.BASE_URL}tedy/case.png`} alt="Case" />
+          <Card style={monitorMain} src={`${import.meta.env.BASE_URL}tedy/monitor-main.png`} alt="Main Monitor" />
+          <Card style={monitorSecondary} src={`${import.meta.env.BASE_URL}tedy/monitor-secondary.png`} alt="Secondary Monitor" />
 
           {/* Main Anchor Card (Foreground) */}
           <motion.div
@@ -66,7 +66,7 @@ export function ExplodingHero() {
             className="absolute inset-0 w-[280px] h-[280px] rounded-2xl overflow-hidden shadow-2xl z-10"
           >
             <img
-              src="/tedy/assembled_pc.png"
+              src={`${import.meta.env.BASE_URL}tedy/assembled_pc.png`}
               alt="Assembled PC"
               className="w-full h-full object-cover"
             />
