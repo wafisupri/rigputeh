@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="ghostGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4aa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00b896;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark mode variant using CSS prefers-color-scheme -->
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .ghost-body { fill: #1e293b; stroke: #334155; }
+      .ghost-eye { fill: #f8fafc; }
+      .accent-part { fill: url(#accentGradient); filter: url(#glow); }
+      .circuit { stroke: #00d4aa; }
+    }
+    @media (prefers-color-scheme: light) {
+      .ghost-body { fill: url(#ghostGradient); stroke: #cbd5e1; }
+      .ghost-eye { fill: #0f172a; }
+      .accent-part { fill: url(#accentGradient); filter: url(#glow); }
+      .circuit { stroke: #00b896; }
+    }
+  </style>
+
+  <!-- Main ghost silhouette -->
+  <path class="ghost-body" d="M50 15
+    C35 15, 22 28, 22 43
+    L22 75
+    Q22 88, 30 88
+    L70 88
+    Q78 88, 78 75
+    L78 43
+    C78 28, 65 15, 50 15 Z"
+    stroke-width="2"/>
+
+  <!-- Ghost bottom wavy edge -->
+  <path class="ghost-body" d="M30 88 Q35 80 40 88 Q45 80 50 88 Q55 80 60 88 Q65 80 70 88" fill="none" stroke-width="2"/>
+
+  <!-- Eyes -->
+  <circle class="ghost-eye" cx="40" cy="40" r="5"/>
+  <circle class="ghost-eye" cx="60" cy="40" r="5"/>
+
+  <!-- Accent highlight (GPU/cooling block) -->
+  <rect class="accent-part" x="35" y="50" width="30" height="12" rx="3"/>
+
+  <!-- Circuit lines -->
+  <line class="circuit" x1="30" y1="60" x2="70" y2="60" stroke-width="1.5" stroke-linecap="round"/>
+  <line class="circuit" x1="45" y1="55" x2="45" y2="70" stroke-width="1" stroke-linecap="round"/>
+  <line class="circuit" x1="55" y1="55" x2="55" y2="70" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Small accent dots -->
+  <circle class="accent-part" cx="25" cy="30" r="3" opacity="0.8"/>
+  <circle class="accent-part" cx="75" cy="30" r="3" opacity="0.8"/>
+  <circle class="accent-part" cx="25" cy="65" r="2" opacity="0.6"/>
+  <circle class="accent-part" cx="75" cy="65" r="2" opacity="0.6"/>
+</svg>

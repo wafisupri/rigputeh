@@ -1,0 +1,42 @@
+{
+  "name": "White Ghost Rig",
+  "short_name": "WhiteGhost",
+  "description": "Interactive 3D portfolio for White Ghost Rig custom gaming PC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#00d4aa",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["technology", "entertainment"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "View Specs",
+      "short_name": "Specs",
+      "description": "View full specifications",
+      "url": "/#specs",
+      "icons": [{ "src": "/favicon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Disassembly",
+      "short_name": "Disassembly",
+      "description": "Start interactive disassembly",
+      "url": "/#gpu",
+      "icons": [{ "src": "/favicon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
